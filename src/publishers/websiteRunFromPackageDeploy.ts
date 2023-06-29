@@ -25,11 +25,17 @@ export class WebsiteRunFromPackageDeploy {
                 new DefaultAzureCredential()
             );
         }
+        Logger.Info("**************** 1");
         const containerClient: ContainerClient = blobServiceClient.getContainerClient(ConfigurationConstant.BlobContainerName);
+        Logger.Info("**************** 2");
         await containerClient.createIfNotExists();
+        Logger.Info("**************** 3");
         const blobName: string = this.createBlobName();
+        Logger.Info("**************** 4");
         let blockBlobClient: BlockBlobClient = containerClient.getBlockBlobClient(blobName);
+        Logger.Info("**************** 5");
         await blockBlobClient.uploadFile(context.publishContentPath);
+        Logger.Info("**************** 6");
 
         const packageUrl: string = blockBlobClient.url;
         core.setOutput(ConfigurationConstant.ParamOutPackageUrl, packageUrl);
